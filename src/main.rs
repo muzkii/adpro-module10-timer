@@ -101,6 +101,7 @@ impl Executor {
 fn main() {
     let (executor, spawner) = new_executor_and_spawner();
 
+    // Multiple spawns
     // Spawn a task to print before and after waiting on a timer.
     spawner.spawn(async {
         println!("Andriyo Averill's Komputer: howdy!");
@@ -109,6 +110,18 @@ fn main() {
         println!("Andriyo Averill's Komputer: done!");
     });
 
+    spawner.spawn(async {
+        println!("Andriyo Averill's Komputer: howdy2!");
+        TimerFuture::new(Duration::new(2, 0)).await;
+        println!("Andriyo Averill's Komputer: done2!");
+    });
+
+    spawner.spawn(async {
+        println!("Andriyo Averill's Komputer: howdy3!");
+        TimerFuture::new(Duration::new(2, 0)).await;
+        println!("Andriyo Averill's Komputer: done3!");
+    });
+    
     println!("Andriyo Averill's Komputer: hey hey");
     // Drop the spawner so that our executor knows it is finished and won't
     // receive more incoming tasks to run.
